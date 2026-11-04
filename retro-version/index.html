@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Priyanshu Singh — Portfolio</title>
+  <meta name="description" content="Priyanshu Singh: CS engineer specialising in data science, LLM trainer, product & frontend designer. A story-driven portfolio." />
+  <meta property="og:title" content="Priyanshu Singh — Portfolio" />
+  <meta property="og:description" content="Data science · LLM training · Product & frontend design." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><rect width='16' height='16' fill='%230b0d17'/><rect x='4' y='2' width='8' height='6' fill='%23f2c14e'/><rect x='5' y='4' width='2' height='2' fill='%230b0d17'/><rect x='9' y='4' width='2' height='2' fill='%230b0d17'/><rect x='4' y='8' width='8' height='5' fill='%237cf5c2'/><rect x='5' y='13' width='2' height='2' fill='%23f2c14e'/><rect x='9' y='13' width='2' height='2' fill='%23f2c14e'/></svg>" />
+</head>
+<body>
+
+  <!-- ===== INTRO / PRESS START ===== -->
+  <div id="intro" class="intro" aria-label="Intro screen">
+    <div class="intro__scan"></div>
+    <div class="intro__content">
+      <canvas id="introSprite" class="intro__sprite" width="16" height="16" aria-hidden="true"></canvas>
+      <p class="intro__eyebrow">A PORTFOLIO QUEST</p>
+      <h1 class="intro__title">PRIYANSHU<br/>SINGH</h1>
+      <p class="intro__sub">Data Science · LLM Training · Product Design</p>
+      <button id="startBtn" class="btn btn--start">▶ PRESS START</button>
+      <button id="startMuteBtn" class="intro__quiet">continue without sound</button>
+      <p class="intro__hint">headphones recommended · 8-bit ambient soundtrack</p>
+    </div>
+  </div>
+
+  <!-- ===== BACKGROUND ===== -->
+  <canvas id="stars" class="stars" aria-hidden="true"></canvas>
+  <canvas id="particles" class="particles" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- ===== HUD ===== -->
+  <header class="hud" id="hud">
+    <a href="#hero" class="hud__logo" aria-label="Home">
+      <span class="hud__logoPix" aria-hidden="true"></span>
+      <span>PS</span>
+    </a>
+    <nav class="hud__nav" aria-label="Chapters">
+      <a href="#origin">Origin</a>
+      <a href="#inventory">Skills</a>
+      <a href="#quests">Quests</a>
+      <a href="#builds">Builds</a>
+      <a href="#design">Design</a>
+      <a href="#guild">Guild</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="hud__right">
+      <div class="hud__level" aria-live="polite">
+        <span class="hud__lvlLabel">LVL</span>
+        <span id="hudLevel" class="hud__lvlNum">01</span>
+        <span id="hudName" class="hud__lvlName">Title Screen</span>
+      </div>
+      <div class="xp" title="Progress">
+        <div class="xp__bar"><div id="xpFill" class="xp__fill"></div></div>
+        <span class="xp__label">XP</span>
+      </div>
+      <button id="soundBtn" class="sound" aria-pressed="false" aria-label="Toggle sound">
+        <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="sound__text">SOUND OFF</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ===== HERO / LEVEL 1 ===== -->
+    <section id="hero" class="hero level" data-level="01" data-name="Title Screen" data-mood="calm">
+      <div class="hero__inner">
+        <p class="eyebrow reveal">// LEVEL 01 — NEW GAME</p>
+        <h1 class="hero__title reveal">
+          <span class="hero__line">Hi, I'm</span>
+          <span class="hero__name disintegrate" data-text="Priyanshu">Priyanshu</span>
+        </h1>
+        <p class="hero__tag reveal">
+          I'm a <strong>CS engineer specialising in data science</strong> who has spent the last year
+          training and evaluating large language models — and who designs the interfaces people actually use.
+        </p>
+        <div class="hero__cta reveal">
+          <a href="#quests" class="btn btn--primary">View my quests</a>
+          <a href="#contact" class="btn btn--ghost">Say hello</a>
+        </div>
+        <ul class="hero__stats reveal" aria-label="Quick stats">
+          <li><b data-count="20">0</b><span>+ LLM projects</span></li>
+          <li><b data-count="5">0</b><span>+ roles</span></li>
+          <li><b data-count="4000">0</b><span>+ event participants</span></li>
+          <li><b>&lt;5%</b><span>QA failure rate</span></li>
+        </ul>
+      </div>
+      <div class="hero__scroll" aria-hidden="true">
+        <span>SCROLL TO BEGIN</span>
+        <i class="hero__arrow"></i>
+      </div>
+    </section>
+
+    <!-- ===== ORIGIN / ABOUT ===== -->
+    <section id="origin" class="level section" data-level="02" data-name="Origin Story" data-mood="calm">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">// LEVEL 02</p>
+          <h2 class="disintegrate">Origin Story</h2>
+        </header>
+        <div class="origin">
+          <div class="origin__card reveal">
+            <div class="dialog">
+              <div class="dialog__portrait" aria-hidden="true"><canvas id="portraitSprite" width="16" height="16"></canvas></div>
+              <div class="dialog__body">
+                <p class="dialog__name">PRIYANSHU</p>
+                <p class="typewriter" data-text="I grew up in Prayagraj, got curious about computers early, and never really stopped. Today I'm a final-year Computer Science Engineering student at Bennett University (The Times Group) with a data-science specialisation and an 8.0 CGPA."></p>
+              </div>
+            </div>
+            <div class="dialog">
+              <div class="dialog__portrait dialog__portrait--alt" aria-hidden="true"><canvas id="portraitSprite2" width="16" height="16"></canvas></div>
+              <div class="dialog__body">
+                <p class="dialog__name">PRIYANSHU</p>
+                <p class="typewriter" data-text="For the past year I've worked as a freelance LLM trainer — RLHF, SFT, evaluation, prompt engineering — for Scale AI and Outlier on projects for Google and Apple. In parallel I design: Figma, product flows, landing pages, and frontends that feel good to use."></p>
+              </div>
+            </div>
+          </div>
+          <aside class="origin__side reveal">
+            <div class="statCard">
+              <h3>Character Sheet</h3>
+              <dl>
+                <dt>Class</dt><dd>Data Scientist / Designer</dd>
+                <dt>Base</dt><dd>Greater Noida, India (Remote-friendly)</dd>
+                <dt>Education</dt><dd>B.Tech CSE, Bennett University · 2023–2027 · CGPA 8.0</dd>
+                <dt>Schooling</dt><dd>Kendriya Vidyalaya, Prayagraj · Class 12: 80% · Class 10: 94.2%</dd>
+                <dt>Coursework</dt><dd>OS, DSA, Algorithms, AI, ML, Networking, Databases</dd>
+              </dl>
+              <div class="bars">
+                <div class="bar"><span>Data Science</span><i style="--v:92%"></i></div>
+                <div class="bar"><span>LLM Training</span><i style="--v:90%"></i></div>
+                <div class="bar"><span>Frontend</span><i style="--v:88%"></i></div>
+                <div class="bar"><span>Figma / Product</span><i style="--v:90%"></i></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== INVENTORY / SKILLS ===== -->
+    <section id="inventory" class="level section" data-level="03" data-name="Inventory" data-mood="explore">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">// LEVEL 03</p>
+          <h2 class="disintegrate">Inventory</h2>
+          <p class="section__lead">Tools I've picked up along the way. Hover a slot.</p>
+        </header>
+        <div class="inventory">
+          <div class="inv__group reveal">
+            <h3>Languages</h3>
+            <ul class="slots">
+              <li>Python</li><li>C++</li><li>Java</li><li>JavaScript</li><li>SQL</li>
+            </ul>
+          </div>
+          <div class="inv__group reveal">
+            <h3>Frameworks</h3>
+            <ul class="slots">
+              <li>React</li><li>Node.js</li><li>Express</li><li>Django</li><li>TensorFlow</li><li>Scikit-learn</li><li>FastAPI</li>
+            </ul>
+          </div>
+          <div class="inv__group reveal">
+            <h3>Data Tools</h3>
+            <ul class="slots">
+              <li>Pandas</li><li>OpenCV</li><li>Plotly</li><li>Bokeh</li><li>Matplotlib</li><li>Scanpy</li><li>DESeq2</li><li>XGBoost</li>
+            </ul>
+          </div>
+          <div class="inv__group inv__group--rare reveal">
+            <h3>Agentic AI <span class="tag">rare</span></h3>
+            <ul class="slots">
+              <li>LLM Training</li><li>RLHF / SFT</li><li>Prompt Eng.</li><li>Autogen</li><li>n8n</li><li>MCP</li><li>Multi-model AI</li><li>Conversational AI</li>
+            </ul>
+          </div>
+          <div class="inv__group inv__group--rare reveal">
+            <h3>Design <span class="tag">rare</span></h3>
+            <ul class="slots">
+              <li>Figma</li><li>Product Design</li><li>UI / UX</li><li>Web Design</li><li>Prototyping</li><li>Design Systems</li>
+            </ul>
+          </div>
+          <div class="inv__group reveal">
+            <h3>Infra & Tools</h3>
+            <ul class="slots">
+              <li>Docker</li><li>Kubernetes</li><li>CI/CD</li><li>GitHub Actions</li><li>Git</li><li>MySQL</li><li>SQLite</li><li>MATLAB</li><li>Jupyter</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== QUESTS / EXPERIENCE ===== -->
+    <section id="quests" class="level section" data-level="04" data-name="Quest Log" data-mood="adventure">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">// LEVEL 04</p>
+          <h2 class="disintegrate">Quest Log</h2>
+          <p class="section__lead">Where I've worked and what I shipped.</p>
+        </header>
+        <ol class="quests">
+          <li class="quest reveal quest--active">
+            <div class="quest__marker"><span>★</span></div>
+            <div class="quest__card">
+              <div class="quest__top">
+                <h3>Gen AI Queue Manager <small>(Contractor)</small></h3>
+                <span class="quest__status quest__status--live">IN PROGRESS</span>
+              </div>
+              <p class="quest__meta">Scale AI · Remote · Mar 2026 — Present</p>
+              <ul>
+                <li>Support RLHF/SFT and SWE coding workflows, delivering annotations and prompt-engineering outputs with an under-5% QA failure rate.</li>
+                <li>Manage task pipelines and taxonomy design, contributing to scalable quality-control processes for global assignments.</li>
+              </ul>
+            </div>
+          </li>
+          <li class="quest reveal">
+            <div class="quest__marker"><span>✓</span></div>
+            <div class="quest__card">
+              <div class="quest__top">
+                <h3>AI Expert <small>(Contract)</small></h3>
+                <span class="quest__status">COMPLETED</span>
+              </div>
+              <p class="quest__meta">Outlier.ai · Remote · Apr 2025 — Mar 2026</p>
+              <ul>
+                <li><b>India INQA Managed Workforce:</b> 20+ projects across LLM development, evaluation and optimisation — trained, pruned and evaluated models through prompt engineering, data labelling and quality assessment.</li>
+                <li><b>Project Gemini (Google):</b> Veo 3 and Google Slides optimisation tasks under ICE team guidance.</li>
+                <li><b>Project Penguin (Apple):</b> Optimised Apple's agentic AI via n8n, stress testing, RL and prompt tuning.</li>
+              </ul>
+            </div>
+          </li>
+          <li class="quest reveal">
+            <div class="quest__marker"><span>✓</span></div>
+            <div class="quest__card">
+              <div class="quest__top">
+                <h3>Student Developer / Trainee</h3>
+                <span class="quest__status">COMPLETED</span>
+              </div>
+              <p class="quest__meta">Banaras Locomotive Works (Indian Railways) · On-site · Jun — Jul 2025</p>
+              <ul>
+                <li>Built and maintained DBMS and internal systems using Java, .NET and SQL.</li>
+                <li>Conducted mechanical and electrical tests on locomotives, including load tests and road run tests.</li>
+                <li>Assisted with operations planning, production scheduling and quality control.</li>
+              </ul>
+            </div>
+          </li>
+          <li class="quest reveal">
+            <div class="quest__marker"><span>✓</span></div>
+            <div class="quest__card">
+              <div class="quest__top">
+                <h3>Marketing Intern</h3>
+                <span class="quest__status">COMPLETED</span>
+              </div>
+              <p class="quest__meta">Calivo AI · Remote · Apr — Jun 2025</p>
+              <ul>
+                <li>Executed AI-focused marketing campaigns to drive user acquisition and brand visibility.</li>
+                <li>Analysed market and user data to refine targeting and product positioning; tracked metrics and optimised for conversion.</li>
+              </ul>
+            </div>
+          </li>
+          <li class="quest reveal">
+            <div class="quest__marker"><span>✓</span></div>
+            <div class="quest__card">
+              <div class="quest__top">
+                <h3>Marketing Intern</h3>
+                <span class="quest__status">COMPLETED</span>
+              </div>
+              <p class="quest__meta">Coginetics LLP · Remote/On-site · Jan — Apr 2025</p>
+              <ul>
+                <li>Ran digital campaigns to improve brand reach and online engagement.</li>
+                <li>Market and competitor research; monitored KPIs and collaborated cross-functionally to improve conversion.</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== BUILDS / PROJECTS ===== -->
+    <section id="builds" class="level section" data-level="05" data-name="Workshop" data-mood="build">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">// LEVEL 05</p>
+          <h2 class="disintegrate">Workshop</h2>
+          <p class="section__lead">Things I've built.</p>
+        </header>
+        <div class="grid">
+          <article class="card reveal">
+            <div class="card__art card__art--a" aria-hidden="true"></div>
+            <div class="card__body">
+              <p class="card__date">Sep 2025</p>
+              <h3>Rainfall Prediction System</h3>
+              <p>End-to-end ML pipeline on historical Indian rainfall data. Random Forest and XGBoost models deployed behind FastAPI for real-time predictions; evaluated with MAE.</p>
+              <ul class="chips"><li>Python</li><li>Pandas</li><li>XGBoost</li><li>FastAPI</li></ul>
+            </div>
+          </article>
+          <article class="card reveal">
+            <div class="card__art card__art--b" aria-hidden="true"></div>
+            <div class="card__body">
+              <p class="card__date">Apr 2025</p>
+              <h3>Time Series Forecasting</h3>
+              <p>ARIMA and VAR models for analysing and forecasting time-dependent datasets — stationarity testing, parameter estimation and residual diagnostics.</p>
+              <ul class="chips"><li>ARIMA</li><li>VAR</li><li>Statsmodels</li></ul>
+            </div>
+          </article>
+          <article class="card reveal">
+            <div class="card__art card__art--c" aria-hidden="true"></div>
+            <div class="card__body">
+              <p class="card__date">Dec 2024</p>
+              <h3>Stock Market Analysis & Prediction</h3>
+              <p>Analysed historical stock data in Python to identify trends and generate price forecasts with machine learning.</p>
+              <ul class="chips"><li>Python</li><li>ML</li><li>Data Viz</li></ul>
+            </div>
+          </article>
+          <article class="card reveal">
+            <div class="card__art card__art--d" aria-hidden="true"></div>
+            <div class="card__body">
+              <p class="card__date">Apr 2024</p>
+              <h3>Code Breakers</h3>
+              <p>A centralised gaming hub built in Python, catering to the diverse needs of gaming enthusiasts.</p>
+              <ul class="chips"><li>Python</li><li>Games</li></ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DESIGN GALLERY ===== -->
+    <section id="design" class="level section" data-level="06" data-name="Design Lab" data-mood="dream">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">// LEVEL 06</p>
+          <h2 class="disintegrate">Design Lab</h2>
+          <p class="section__lead">Product and web-page designs from Figma. Drop your shots into <code>assets/design/</code> and update the cards below.</p>
+        </header>
+        <div class="gallery">
+          <figure class="shot reveal">
+            <div class="shot__frame"><div class="shot__ph"><span>PRODUCT DESIGN</span><small>add image</small></div></div>
+            <figcaption><b>Product UI concept</b><span>Figma · Mobile</span></figcaption>
+          </figure>
+          <figure class="shot reveal">
+            <div class="shot__frame"><div class="shot__ph"><span>LANDING PAGE</span><small>add image</small></div></div>
+            <figcaption><b>Marketing landing page</b><span>Figma · Web</span></figcaption>
+          </figure>
+          <figure class="shot reveal">
+            <div class="shot__frame"><div class="shot__ph"><span>DASHBOARD</span><small>add image</small></div></div>
+            <figcaption><b>Analytics dashboard</b><span>Figma · Web app</span></figcaption>
+          </figure>
+          <figure class="shot reveal">
+            <div class="shot__frame"><div class="shot__ph"><span>DESIGN SYSTEM</span><small>add image</small></div></div>
+            <figcaption><b>Component library</b><span>Figma · System</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GUILD / LEADERSHIP + ACHIEVEMENTS ===== -->
+    <section id="guild" class="level section" data-level="07" data-name="Guild Hall" data-mood="adventure">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">// LEVEL 07</p>
+          <h2 class="disintegrate">Guild Hall</h2>
+          <p class="section__lead">Leadership, communities and trophies.</p>
+        </header>
+        <div class="guild">
+          <div class="guild__col">
+            <h3 class="reveal">Leadership</h3>
+            <div class="role reveal">
+              <h4>Multimedia Lead · Google Developer Group, Bennett University</h4>
+              <p class="role__meta">Delhi NCR · 2024–25</p>
+              <p>Led 12+ technical events engaging 4,000+ participants, driving 40% membership growth.</p>
+            </div>
+            <div class="role reveal">
+              <h4>Founding Core Member · Centre for Law, Technology & Innovation (CLTI)</h4>
+              <p class="role__meta">Delhi NCR · 2024–25</p>
+              <p>Part of the founding core team, owning logistics and technical aspects for the centre.</p>
+            </div>
+            <div class="role reveal">
+              <h4>Lead · Student Times Media Team</h4>
+              <p class="role__meta">Greater Noida · 2024–25</p>
+              <p>Organised events and conducted workshops reaching 7,000+ scholars.</p>
+            </div>
+          </div>
+          <div class="guild__col">
+            <h3 class="reveal">Achievements</h3>
+            <ul class="trophies">
+              <li class="trophy reveal"><span class="trophy__icon">🥉</span><div><b>2nd Runners-Up</b><span>Sandbox24 · JIIT</span></div></li>
+              <li class="trophy reveal"><span class="trophy__icon">🏆</span><div><b>Winner</b><span>Mobilon's RT Conference '23</span></div></li>
+              <li class="trophy reveal"><span class="trophy__icon">🎯</span><div><b>Finalist</b><span>Smart BU Hackathon</span></div></li>
+              <li class="trophy reveal"><span class="trophy__icon">🧠</span><div><b>20+ LLM projects</b><span>Outlier India INQA MWF</span></div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT / FINAL ===== -->
+    <section id="contact" class="level section section--final" data-level="08" data-name="Save Point" data-mood="warm">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">// LEVEL 08 — FINAL</p>
+          <h2 class="disintegrate">Save Point</h2>
+          <p class="section__lead">Looking for a data scientist who can also design the product? Let's talk.</p>
+        </header>
+        <div class="contact reveal">
+          <a class="contact__main btn btn--primary disintegrate" data-color="#0b0d17" href="mailto:2005priyanshu@gmail.com">2005priyanshu@gmail.com</a>
+          <div class="contact__links">
+            <a href="https://github.com/2005Priyanshu" target="_blank" rel="noopener">GitHub ↗</a>
+            <a href="https://leetcode.com/" target="_blank" rel="noopener">LeetCode ↗</a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a>
+            <a href="tel:+918931022445">+91 89310 22445</a>
+            <a href="Resume_Priyanshu_AI.pdf" download>Download CV ↓</a>
+          </div>
+        </div>
+        <p class="gameover reveal disintegrate">THANKS FOR PLAYING</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PIXEL CHARACTER WALKWAY ===== -->
+  <div class="walkway" aria-hidden="true">
+    <div class="walkway__ground"></div>
+    <canvas id="hero-sprite" class="walkway__sprite" width="16" height="16"></canvas>
+  </div>
+
+  <footer class="footer">
+    <span>© 2026 Priyanshu Singh</span>
+    <span>Built with HTML, CSS, JS & the Web Audio API · no frameworks</span>
+  </footer>
+
+  <div id="cursor" aria-hidden="true"><div class="cursor__box"></div><div class="cursor__dot"></div></div>
+
+  <script src="script.js"></script>
+  <script src="fx.js"></script>
+</body>
+</html>

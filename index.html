@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Priyanshu Singh | Data Scientist & Product Designer</title>
+  <meta name="description" content="Priyanshu Singh trains and evaluates large language models and designs the products people use them through. Data science, LLM training, product and frontend design." />
+  <meta property="og:title" content="Priyanshu Singh | Data Scientist & Product Designer" />
+  <meta property="og:description" content="LLM training & evaluation, data science, product and frontend design." />
+  <meta name="theme-color" content="#222124" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20261104b" />
+  <script>
+    /* Story mode opens the first visit in the forest (story.js). Decided here, before anything is drawn,
+       so the page doesn't flash up first. Add ?story to see it again, ?nostory to skip it. */
+    (function () {
+      var q = location.search, seen = null;
+      try { seen = localStorage.getItem('forest-story-seen'); } catch (e) {}
+      var play = /[?&]story\b/.test(q) || (!seen && !location.hash && !/[?&]nostory\b/.test(q) && !matchMedia('(prefers-reduced-motion: reduce)').matches);
+      if (!play) return;
+      var html = document.documentElement;
+      html.classList.add('story-boot');
+      setTimeout(function () { html.classList.remove('story-boot'); }, 9000); // if the forest never loads, just show the page
+    })();
+  </script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23222124'/><circle cx='16' cy='16' r='6' fill='%23f4ce15'/></svg>" />
+</head>
+<body>
+
+  <!-- Fixed layers -->
+  <canvas id="world" aria-hidden="true" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:0"></canvas>
+  <canvas id="sky" class="landscape" aria-hidden="true" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none"></canvas>
+  <canvas id="forest" class="landscape" aria-hidden="true" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="story-veil" aria-hidden="true"><p>Entering the forest</p></div>
+
+  <!-- Header -->
+  <header class="header">
+    <a href="#top" class="brand" data-cursor="Top">
+      <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" /><path d="M14 28V12h7a5 5 0 0 1 0 10h-7" /></svg>
+      <span class="brand__name">Priyanshu Singh</span>
+    </a>
+    <nav class="nav glass glass--refract" aria-label="Main">
+      <span class="nav__bubble" aria-hidden="true"></span>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#evaluate">Evaluate</a>
+      <a href="#work">Work</a>
+      <a href="#design">Design</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header__meta glass glass--refract">
+      <button id="paletteBtn" class="kbd" aria-label="Open the command menu" aria-haspopup="dialog" data-cursor="Menu"><span class="kbd__key kbd__mod">⌘</span><span class="kbd__key">K</span></button>
+      <!-- Soundtrack: put an audio file you have the rights to at data-track and set its tempo in data-bpm.
+           Without the file, the built-in generated track plays instead. -->
+      <button id="sound" class="sound" aria-pressed="false" data-cursor="Sound" data-track="assets/audio/track.mp3" data-bpm="120">
+        <span class="sound__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="sound__label">Sound off</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- 01 HERO -->
+    <section class="hero" data-scene="0">
+      <div class="hero__top">
+        <h1 class="sr-only">Priyanshu Singh, data scientist and product designer</h1>
+        <p class="hero__name" aria-hidden="true">Priyanshu Singh</p>
+        <div class="hero-clock blur-in" role="timer" aria-label="Current time in India">
+          <svg class="hero-clock__face" viewBox="0 0 40 40" aria-hidden="true">
+            <circle class="hero-clock__ring" cx="20" cy="20" r="18.5"/>
+            <g class="hero-clock__ticks"><line x1="20" y1="3.2" x2="20" y2="6" transform="rotate(0 20 20)"/><line x1="20" y1="3.2" x2="20" y2="4.6" transform="rotate(30 20 20)"/><line x1="20" y1="3.2" x2="20" y2="4.6" transform="rotate(60 20 20)"/><line x1="20" y1="3.2" x2="20" y2="6" transform="rotate(90 20 20)"/><line x1="20" y1="3.2" x2="20" y2="4.6" transform="rotate(120 20 20)"/><line x1="20" y1="3.2" x2="20" y2="4.6" transform="rotate(150 20 20)"/><line x1="20" y1="3.2" x2="20" y2="6" transform="rotate(180 20 20)"/><line x1="20" y1="3.2" x2="20" y2="4.6" transform="rotate(210 20 20)"/><line x1="20" y1="3.2" x2="20" y2="4.6" transform="rotate(240 20 20)"/><line x1="20" y1="3.2" x2="20" y2="6" transform="rotate(270 20 20)"/><line x1="20" y1="3.2" x2="20" y2="4.6" transform="rotate(300 20 20)"/><line x1="20" y1="3.2" x2="20" y2="4.6" transform="rotate(330 20 20)"/></g>
+            <line class="hero-clock__h" x1="20" y1="20" x2="20" y2="11"/>
+            <line class="hero-clock__m" x1="20" y1="20" x2="20" y2="7"/>
+            <line class="hero-clock__s" x1="20" y1="23" x2="20" y2="5.5"/>
+            <circle class="hero-clock__pin" cx="20" cy="20" r="1.3"/>
+          </svg>
+          <div class="hero-clock__text">
+            <p class="hero-clock__time"><span id="istTime">--:--</span><span id="istSec" class="hero-clock__sec">:--</span><span class="hero-clock__tz">IST</span></p>
+            <p class="hero-clock__place"><span id="istDate"></span> · Delhi, India</p>
+            <p class="hero-clock__hi" lang="hi">भारतीय मानक समय</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero__bottom">
+        <p class="hero__title split">I train and evaluate <span class="em">language models,</span> and design the products people use them through.</p>
+        <div class="hero__aside blur-in">
+          <p class="label">Based in India<span class="muted">Open to new opportunities</span></p>
+          <a href="#about" class="scroll-cue" data-cursor="Scroll"><span>Scroll</span><i></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 STATEMENT -->
+    <section class="statement" id="about" data-scene="1">
+      <div class="statement__copy">
+        <p class="kicker blur-in">About</p>
+        <p class="t-lg split">Most AI is judged by what it says. For the past year I've worked on the other side of that, writing, ranking and stress-testing model responses for Scale&nbsp;AI and Outlier on projects for Google and Apple.</p>
+        <p class="t-md muted blur-in">Alongside it, I design. Figma, product flows, landing pages and frontends, because a model is only as good as the interface it reaches people through.</p>
+      </div>
+      <ul class="numbers">
+        <li class="blur-in"><b data-count="20">0</b><span>+ LLM projects shipped</span></li>
+        <li class="blur-in"><b>&lt;5%</b><span>QA failure rate at Scale AI</span></li>
+        <li class="blur-in"><b data-count="4000">0</b><span>+ people reached through events</span></li>
+        <li class="blur-in"><b>8.0</b><span>CGPA, B.Tech CSE</span></li>
+      </ul>
+    </section>
+
+    <!-- 03 LOCATION / EDUCATION -->
+    <section class="place" data-scene="2">
+      <div class="place__label blur-in">
+        <p class="kicker">Currently</p>
+        <p class="t-md">Delhi, India</p>
+        <p class="mono muted">28.47° N &nbsp; 77.50° E</p>
+      </div>
+      <div class="place__edu blur-in">
+        <p class="kicker">Education</p>
+        <p class="t-sm">B.Tech, Computer Science Engineering<br/><span class="muted">Data Science specialisation</span></p>
+        <p class="t-sm">Bennett University, The Times Group<br/><span class="muted">2023 to 2027 · CGPA 8.0</span></p>
+        <p class="mono muted">OS · DSA · Algorithms · AI · ML · Networks · Databases</p>
+      </div>
+    </section>
+
+    <!-- 04 EXPERIENCE -->
+    <section class="experience" id="experience" data-scene="3">
+      <header class="section-head">
+        <p class="kicker blur-in">Experience</p>
+        <h2 class="t-xl split">Where I've been doing the work.</h2>
+      </header>
+      <ol class="roles">
+        <li class="role blur-in">
+          <button class="role__row" aria-expanded="false" data-cursor="Open">
+            <span class="role__year mono">2026 – Now</span>
+            <span class="role__co">Scale AI</span>
+            <span class="role__title">Gen AI Queue Manager</span>
+            <span class="role__plus" aria-hidden="true"></span>
+          </button>
+          <div class="role__more"><div>
+            <p>Supporting RLHF, SFT and SWE coding workflows, delivering annotations and prompt-engineering outputs with an under-5% QA failure rate.</p>
+            <p>Managing task pipelines and taxonomy design, contributing to scalable quality-control processes for global assignments.</p>
+            <p class="mono muted">Contract · Remote</p>
+          </div></div>
+        </li>
+        <li class="role blur-in">
+          <button class="role__row" aria-expanded="false" data-cursor="Open">
+            <span class="role__year mono">2025 – 2026</span>
+            <span class="role__co">Outlier.ai</span>
+            <span class="role__title">AI Expert</span>
+            <span class="role__plus" aria-hidden="true"></span>
+          </button>
+          <div class="role__more"><div>
+            <p>Contributed to 20+ projects in the India INQA managed workforce, training, pruning and evaluating LLMs through prompt engineering, data labelling and quality assessment.</p>
+            <p><b>Project Gemini, Google.</b> Veo 3 and Google Slides optimisation tasks under ICE team guidance.</p>
+            <p><b>Project Penguin, Apple.</b> Optimised agentic AI behaviour through n8n workflows, stress testing, RL and prompt tuning.</p>
+            <p class="mono muted">Contract · Remote</p>
+          </div></div>
+        </li>
+        <li class="role blur-in">
+          <button class="role__row" aria-expanded="false" data-cursor="Open">
+            <span class="role__year mono">2025</span>
+            <span class="role__co">Banaras Locomotive Works</span>
+            <span class="role__title">Student Developer</span>
+            <span class="role__plus" aria-hidden="true"></span>
+          </button>
+          <div class="role__more"><div>
+            <p>Built and maintained DBMS and internal systems for Indian Railways using Java, .NET and SQL.</p>
+            <p>Ran mechanical and electrical tests on locomotives, including load tests and road run tests, and supported production scheduling and quality control.</p>
+            <p class="mono muted">Internship · On-site, Varanasi</p>
+          </div></div>
+        </li>
+        <li class="role blur-in">
+          <button class="role__row" aria-expanded="false" data-cursor="Open">
+            <span class="role__year mono">2025</span>
+            <span class="role__co">Calivo AI</span>
+            <span class="role__title">Marketing Intern</span>
+            <span class="role__plus" aria-hidden="true"></span>
+          </button>
+          <div class="role__more"><div>
+            <p>Executed AI-focused campaigns for user acquisition and brand visibility, analysed market and user data to refine targeting and positioning, and optimised for conversion.</p>
+            <p class="mono muted">Internship · Remote</p>
+          </div></div>
+        </li>
+        <li class="role blur-in">
+          <button class="role__row" aria-expanded="false" data-cursor="Open">
+            <span class="role__year mono">2025</span>
+            <span class="role__co">Coginetics LLP</span>
+            <span class="role__title">Marketing Intern</span>
+            <span class="role__plus" aria-hidden="true"></span>
+          </button>
+          <div class="role__more"><div>
+            <p>Ran digital campaigns to grow reach and engagement, researched markets and competitors, and tracked KPIs with cross-functional teams.</p>
+            <p class="mono muted">Internship · Hybrid</p>
+          </div></div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 05 EVALUATOR -->
+    <section class="evaluate" id="evaluate" data-scene="4">
+      <header class="section-head">
+        <p class="kicker blur-in">Try my job</p>
+        <h2 class="t-xl split">Which response is better?</h2>
+        <p class="t-md muted blur-in evaluate__lead">I spend my days judging AI answers. Pick the one you would ship, then see how an evaluator scores it.</p>
+      </header>
+      <div class="eval blur-in" id="eval" aria-live="polite">
+        <div class="eval__top">
+          <span class="mono muted eval__round">Round 1 of 3</span>
+          <span class="eval__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+        <div class="eval__prompt glass panel">
+          <span class="mono muted">Prompt</span>
+          <p class="eval__prompt-text"></p>
+        </div>
+        <div class="eval__pair">
+          <button class="eval__resp glass panel" data-side="A" data-cursor="Pick A"><span class="eval__tag mono">Response A</span><span class="eval__body"></span></button>
+          <button class="eval__resp glass panel" data-side="B" data-cursor="Pick B"><span class="eval__tag mono">Response B</span><span class="eval__body"></span></button>
+        </div>
+        <div class="eval__result" hidden></div>
+      </div>
+    </section>
+
+    <!-- 06 WORK -->
+    <section class="work" id="work" data-scene="5">
+      <header class="section-head">
+        <p class="kicker blur-in">Some selected works</p>
+        <h2 class="t-xl split">Models, forecasts and interfaces.</h2>
+      </header>
+      <ul class="projects">
+        <li class="project blur-in" data-preview="rain">
+          <a href="https://github.com/2005Priyanshu" target="_blank" rel="noopener" data-cursor="View">
+            <span class="project__n mono">01</span>
+            <span class="project__name">Rainfall Prediction System</span>
+            <span class="project__tags">Random Forest · XGBoost · FastAPI</span>
+            <span class="project__year mono">2025</span>
+          </a>
+        </li>
+        <li class="project blur-in" data-preview="series">
+          <a href="https://github.com/2005Priyanshu" target="_blank" rel="noopener" data-cursor="View">
+            <span class="project__n mono">02</span>
+            <span class="project__name">Time Series Forecasting</span>
+            <span class="project__tags">ARIMA · VAR · Diagnostics</span>
+            <span class="project__year mono">2025</span>
+          </a>
+        </li>
+        <li class="project blur-in" data-preview="stock">
+          <a href="https://github.com/2005Priyanshu" target="_blank" rel="noopener" data-cursor="View">
+            <span class="project__n mono">03</span>
+            <span class="project__name">Stock Market Prediction</span>
+            <span class="project__tags">Python · ML · Visualisation</span>
+            <span class="project__year mono">2024</span>
+          </a>
+        </li>
+        <li class="project blur-in" data-preview="design">
+          <a href="#design" data-cursor="View">
+            <span class="project__n mono">04</span>
+            <span class="project__name">Product &amp; Web Design</span>
+            <span class="project__tags">Figma · UI/UX · Landing pages</span>
+            <span class="project__year mono">Ongoing</span>
+          </a>
+        </li>
+        <li class="project blur-in" data-preview="games">
+          <a href="https://github.com/2005Priyanshu" target="_blank" rel="noopener" data-cursor="View">
+            <span class="project__n mono">05</span>
+            <span class="project__name">Code Breakers</span>
+            <span class="project__tags">Python · Gaming hub</span>
+            <span class="project__year mono">2024</span>
+          </a>
+        </li>
+      </ul>
+      <p class="work__note muted blur-in">And still working on plenty more.</p>
+      <div class="preview" aria-hidden="true">
+        <div class="preview__glass glass">
+          <div class="preview__inner"><canvas class="preview__canvas"></canvas></div>
+          <div class="preview__cap"><span class="preview__name"></span><span class="preview__go"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 DESIGN CASE STUDIES -->
+    <section class="design" id="design" data-scene="6">
+      <div class="design__intro">
+        <header class="section-head">
+          <p class="kicker blur-in">Design case studies</p>
+          <h2 class="t-xl split">How I design, start to finish.</h2>
+        </header>
+        <!-- 3D object: the island is built in island3d.js. To use a Spline scene instead, paste its
+             …/scene.splinecode URL into data-spline and the island steps aside. -->
+        <div class="spline" data-spline="" aria-hidden="true"></div>
+        <div class="obj3d" data-cursor="Drag" aria-hidden="true"><canvas></canvas></div>
+      </div>
+      <div class="cases" id="cases"></div>
+    </section>
+
+    <!-- 08 CAPABILITIES -->
+    <section class="skills" id="skills" data-scene="7">
+      <header class="section-head">
+        <p class="kicker blur-in">Capabilities</p>
+        <h2 class="t-xl split">From raw data to the screen it lands on.</h2>
+      </header>
+      <div class="skills__grid">
+        <div class="skill blur-in">
+          <h3 class="mono">LLMs &amp; Agentic AI</h3>
+          <p>RLHF and SFT · Model evaluation · Prompt engineering · Autogen · n8n · MCP · Multi-model and conversational AI</p>
+        </div>
+        <div class="skill blur-in">
+          <h3 class="mono">Data &amp; ML</h3>
+          <p>Python · Pandas · Scikit-learn · TensorFlow · XGBoost · OpenCV · Plotly · Bokeh · Matplotlib · Scanpy · DESeq2</p>
+        </div>
+        <div class="skill blur-in">
+          <h3 class="mono">Design &amp; Frontend</h3>
+          <p>Figma · Product design · UI/UX · Prototyping · Design systems · React · JavaScript · HTML and CSS</p>
+        </div>
+        <div class="skill blur-in">
+          <h3 class="mono">Engineering</h3>
+          <p>C++ · Java · SQL · Node.js · Express · Django · FastAPI · Docker · Kubernetes · CI/CD · GitHub Actions</p>
+        </div>
+      </div>
+      <div class="extras">
+        <div class="extras__col blur-in">
+          <h3 class="mono muted">Recognition</h3>
+          <ul>
+            <li><span>2nd Runners-up</span><span class="muted">Sandbox24, JIIT</span></li>
+            <li><span>Winner</span><span class="muted">Mobilon's RT Conference '23</span></li>
+            <li><span>Finalist</span><span class="muted">Smart BU Hackathon</span></li>
+          </ul>
+        </div>
+        <div class="extras__col blur-in">
+          <h3 class="mono muted">Leadership</h3>
+          <ul>
+            <li><span>Multimedia Lead, GDG Bennett</span><span class="muted">12+ events, 40% member growth</span></li>
+            <li><span>Founding Core Member, CLTI</span><span class="muted">Logistics and technology</span></li>
+            <li><span>Lead, Student Times Media</span><span class="muted">Workshops for 7,000+ scholars</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 CONTACT -->
+    <section class="contact" id="contact" data-scene="8">
+      <p class="kicker blur-in">Get in touch</p>
+      <a class="contact__email blur-in disintegrate" href="mailto:2005priyanshu@gmail.com" data-cursor="Write">2005priyanshu@gmail.com</a>
+      <p class="contact__links blur-in">
+        <span class="muted">or find me on</span>
+        <a class="disintegrate" href="https://github.com/2005Priyanshu" target="_blank" rel="noopener" data-cursor="Open">GitHub</a>
+        <!-- Add your profiles, then uncomment:
+        <a class="disintegrate" href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener" data-cursor="Open">LinkedIn</a>
+        -->
+        <a class="disintegrate" href="Resume_Priyanshu_AI.pdf" download data-cursor="Save">Resume</a>
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <a href="#top" class="footer__mark" data-cursor="Top">
+      <span class="footer__tip">hey there!</span>
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" /><path d="M14 28V12h7a5 5 0 0 1 0 10h-7" /></svg>
+    </a>
+    <p class="mono muted">Priyanshu Singh · © 2026</p>
+    <p class="mono muted disintegrate">Designed and built by me. No cookies, no trackers.</p>
+  </footer>
+
+  <!-- Case study reader -->
+  <div class="case" id="case" role="dialog" aria-modal="true" aria-labelledby="caseTitle" hidden data-native-scroll>
+    <div class="case__bar">
+      <button class="case__back glass" data-cursor="Close">← Back</button>
+      <span class="case__count mono muted"></span>
+      <a class="case__next glass" href="#" data-cursor="Next">Next case →</a>
+    </div>
+    <article class="case__article"></article>
+  </div>
+
+  <!-- Ask about me -->
+  <button class="ask glass" id="askBtn" aria-haspopup="dialog" aria-controls="chat" data-cursor="Ask"><span>Ask about me</span></button>
+  <div class="chat glass panel" id="chat" role="dialog" aria-label="Ask about Priyanshu" hidden>
+    <header class="chat__head">
+      <div>
+        <p class="chat__title">Ask about Priyanshu</p>
+        <p class="chat__sub mono muted">Scripted assistant · answers come from the resume</p>
+      </div>
+      <button class="chat__close" aria-label="Close" data-cursor="Close">×</button>
+    </header>
+    <div class="chat__log" data-native-scroll aria-live="polite"></div>
+    <div class="chat__chips"></div>
+    <form class="chat__form" autocomplete="off">
+      <input class="chat__input" type="text" placeholder="Ask a question…" aria-label="Your question" />
+      <button class="chat__send" type="submit" aria-label="Send" data-cursor="Send">↑</button>
+    </form>
+  </div>
+
+  <!-- Command palette -->
+  <div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Command menu" hidden>
+    <div class="palette__scrim"></div>
+    <div class="palette__box glass panel">
+      <div class="palette__search">
+        <span class="palette__icon" aria-hidden="true">⌘</span>
+        <input class="palette__input" type="text" placeholder="Search or jump to…" aria-label="Search commands" aria-controls="paletteList" autocomplete="off" />
+        <kbd class="palette__esc">esc</kbd>
+      </div>
+      <ul class="palette__list" id="paletteList" role="listbox" data-native-scroll></ul>
+      <div class="palette__foot mono muted"><span>↑ ↓ to move</span><span>↵ to open</span></div>
+    </div>
+  </div>
+  <div class="toast glass" role="status" aria-live="polite"></div>
+
+  <canvas id="trail" class="trail" aria-hidden="true"></canvas>
+  <div class="cursor" aria-hidden="true"><div class="cursor__ring"><span class="cursor__label"></span></div><div class="cursor__dot"></div></div>
+
+  <svg class="lg-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs></defs></svg>
+
+  <script src="case-studies.js?v=20261104b"></script>
+  <script src="main.js?v=20261104b"></script>
+  <script src="features.js?v=20261104b"></script>
+  <script src="landscape.js?v=20261104b"></script>
+  <script src="spline.js?v=20261104b"></script>
+  <script type="module" src="forest3d.js?v=20261104b"></script>
+  <script type="module" src="island3d.js?v=20261104b"></script>
+</body>
+</html>
