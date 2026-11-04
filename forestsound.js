@@ -16,7 +16,7 @@ const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const hz = n => 440 * Math.pow(2, (n - 69) / 12);
 const rand = (a, b) => a + Math.random() * (b - a);
 
-let ac = null, master, musicBus, ambBus, sfxBus, birdBus, fireBus, verbIn, noiseBuf;
+let ac = null, master, musicBus, ambBus, sfxBus, voiceBus, birdBus, fireBus, verbIn, noiseBuf;
 let on = false, musicOn = 0, timer = 0;
 const state = { night: 0, hour: 10, fire: 0, story: false, speaking: false };
 
@@ -35,6 +35,7 @@ function init() {
   musicBus.connect(musicLP).connect(master); musicBus.lp = musicLP;
   ambBus = ac.createGain(); ambBus.gain.value = .9; ambBus.connect(master);
   sfxBus = ac.createGain(); sfxBus.gain.value = .55; sfxBus.connect(master); send(sfxBus, .35);
+  voiceBus = ac.createGain(); voiceBus.gain.value = 1; voiceBus.connect(master);
   birdBus = ac.createGain(); birdBus.gain.value = .5; birdBus.connect(ambBus); send(birdBus, .6);
   fireBus = ac.createGain(); fireBus.gain.value = 0; fireBus.connect(ambBus);
 
@@ -287,8 +288,10 @@ const PITCH = { sage: 150, owl: 520, fox: 780, deer: 430, wisp: 1150 };
 
 /* =====================================================================
    VOICES
-   Each keeper gets a different system voice where the device has one,
-   then its own pitch and pace; each line's mood nudges both.
+   Recorded lines first: tools/make_voices.py records them with ElevenLabs
+   into assets/voice/. Any line without a recording falls back to the
+   device's own voices: a different one for each keeper, with its own
+   pitch and pace, and each line's mood nudging both.
    ===================================================================== */
 const synth = window.speechSynthesis;
 const CAST_VOICE = {
@@ -306,6 +309,48 @@ const MOODS = {
 const SAY = [[/Priyanshu/g, 'Preeyanshu'], [/2005priyanshu@gmail\.com/g, '2 0 0 5 Preeyanshu, at gmail dot com'], [/\bRLHF\b/g, 'R L H F'], [/\bSFT\b/g, 'S F T'],
   [/\bQA\b/g, 'Q A'], [/\bLLM\b/g, 'L L M'], [/\bAI\b/g, 'A I'], [/XGBoost/g, 'X G Boost'], [/FastAPI/g, 'Fast A P I'], [/\.\.\./g, '…']];
 let picked = null, speakingNow = null;
+
+const VOICE_DIR = new URL('assets/voice/', import.meta.url);
+const ROOM = { sage: .14, owl: .08, fox: .05, deer: .1, wisp: .22 }; // how much of the forest's echo each voice carries
+const bytes = new Map();
+let clips = {}, fetched = false;
+function clipBytes(file) {
+  if (!bytes.has(file)) bytes.set(file, fetch(new URL(file, VOICE_DIR)).then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }).catch(e => { bytes.delete(file); throw e; }));
+  return bytes.get(file);
+}
+async function fetchClips() { // ahead of time and in story order, so lines start without a gap
+  if (fetched) return; fetched = true;
+  for (const f of Object.values(clips)) await clipBytes(f).catch(() => {});
+}
+fetch(new URL('manifest.json', VOICE_DIR)).then(r => r.ok ? r.json() : {}).then(m => {
+  clips = m;
+  if (!Object.keys(m).length) return;
+  document.querySelectorAll('.voice-credit').forEach(el => { el.hidden = false; });
+  if (on) fetchClips();
+}).catch(() => {});
+
+// recordings vary a lot (whispered lines especially), so bring each up to speaking level over the forest
+function leveller(buf) {
+  const d = buf.getChannelData(0); let sum = 0, peak = 0;
+  for (let i = 0; i < d.length; i += 4) { const v = Math.abs(d[i]); sum += v * v; if (v > peak) peak = v; }
+  const rms = Math.sqrt(sum / (d.length / 4)) || 1;
+  return Math.min(.09 / rms, 4, .95 / (peak || 1));
+}
+
+function speakClip(who, file, text, mood) {
+  const h = { who, done: false, loading: true, secs: text.split(/\s+/).length / 2.5 + .35 };
+  speakingNow = h;
+  clipBytes(file).then(b => ac.decodeAudioData(b.slice(0))).then(buf => {
+    if (h.done) return;
+    const src = ac.createBufferSource(), g = ac.createGain();
+    src.buffer = buf; src.connect(g).connect(voiceBus); send(g, ROOM[who] || 0);
+    g.gain.value = leveller(buf);
+    src.onended = () => { h.done = true; if (speakingNow === h) speakingNow = null; };
+    Object.assign(h, { src, g, secs: buf.duration, loading: false });
+    src.start();
+  }).catch(() => { if (!h.done) { h.loading = false; speakSynth(who, text, mood, h); } });
+  return h;
+}
 function pickVoices() {
   const all = synth ? synth.getVoices().filter(v => /^en/i.test(v.lang)) : [];
   if (!all.length) return null;
@@ -325,15 +370,33 @@ function pickVoices() {
 }
 if (synth) { picked = pickVoices(); synth.onvoiceschanged = () => { picked = pickVoices(); }; }
 
+function speakSynth(who, text, mood, h = {}) {
+  if (!synth || !picked) { h.done = true; return null; }
+  const c = CAST_VOICE[who], [r, p, v] = MOODS[mood] || MOODS.warm;
+  let words = text; for (const [a, b] of SAY) words = words.replace(a, b);
+  const u = new SpeechSynthesisUtterance(words);
+  u.voice = picked[who]; u.lang = picked[who].lang;
+  u.rate = clamp(c.rate * r, .5, 1.6); u.pitch = clamp(c.pitch * p, .1, 2); u.volume = v;
+  Object.assign(h, { who, u, done: false, secs: words.split(/\s+/).length / (2.55 * u.rate) + .35 }); // u kept so it isn't collected mid-line
+  const end = () => { if (h.done) return; h.done = true; if (speakingNow === h) speakingNow = null; };
+  u.onend = u.onerror = end;
+  setTimeout(end, (h.secs * 2 + 2) * 1000); // some browsers never say they've finished
+  speakingNow = h;
+  // speaking straight after a cancel gets dropped by some browsers, so leave a beat
+  if (synth.speaking || synth.pending) { synth.cancel(); setTimeout(() => { if (speakingNow === h) synth.speak(u); }, 80); }
+  else synth.speak(u);
+  return h;
+}
+
 /* ---------- the module's face ---------- */
 export const sound = {
   get on() { return on; },
-  get canSpeak() { return !!(synth && picked); },
+  get canSpeak() { return !!(synth && picked) || Object.keys(clips).length > 0; },
   setOn(v) { // call from a click the first time, so the browser lets it start
     on = v;
     if (on && !ac) init();
     if (!ac) return;
-    if (on) ac.resume();
+    if (on) { ac.resume(); fetchClips(); }
     glide(master.gain, on ? .9 : 0, on ? 1.2 : .4);
     if (!on) this.hush();
   },
@@ -362,22 +425,14 @@ export const sound = {
   blip(who) { this.sfx('blip', { f: PITCH[who] * rand(.85, 1.2), vol: .8 }); },
   // speaks a line in a keeper's voice; resolves when it's done (or straight away when there's no voice)
   speak(who, text, mood = 'warm') {
-    if (!on || !synth || !picked) return null;
-    const c = CAST_VOICE[who], [r, p, v] = MOODS[mood] || MOODS.warm;
-    let words = text; for (const [a, b] of SAY) words = words.replace(a, b);
-    const u = new SpeechSynthesisUtterance(words);
-    u.voice = picked[who]; u.lang = picked[who].lang;
-    u.rate = clamp(c.rate * r, .5, 1.6); u.pitch = clamp(c.pitch * p, .1, 2); u.volume = v;
-    const h = { who, u, done: false, secs: words.split(/\s+/).length / (2.55 * u.rate) + .35 }; // u kept so it isn't collected mid-line
-    const end = () => { if (h.done) return; h.done = true; if (speakingNow === h) speakingNow = null; };
-    u.onend = u.onerror = end;
-    setTimeout(end, (h.secs * 2 + 2) * 1000); // some browsers never say they've finished
-    speakingNow = h;
-    // speaking straight after a cancel gets dropped by some browsers, so leave a beat
-    if (synth.speaking || synth.pending) { synth.cancel(); setTimeout(() => { if (speakingNow === h) synth.speak(u); }, 80); }
-    else synth.speak(u);
-    return h;
+    if (!on) return null;
+    const file = clips[`${who}|${text}`];
+    return file && ac ? speakClip(who, file, text, mood) : speakSynth(who, text, mood);
   },
-  hush() { if (speakingNow) speakingNow.done = true; speakingNow = null; if (synth && (synth.speaking || synth.pending)) synth.cancel(); },
+  hush() {
+    const h = speakingNow;
+    if (h) { h.done = true; if (h.src) { const t = ac.currentTime; h.g.gain.setTargetAtTime(0, t, .02); h.src.stop(t + .1); } }
+    speakingNow = null; if (synth && (synth.speaking || synth.pending)) synth.cancel();
+  },
   get speaking() { return speakingNow; }
 };

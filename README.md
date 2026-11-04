@@ -19,6 +19,7 @@ python3 serve.py
 - `main.js` — reveals, cursor and star trail, hover previews, smooth scroll, Indian clock, soundtrack.
 - `forest3d.js` — the 3D world behind the whole page (Three.js): terrain with snowy ridges, about 11,000 trees that sway in the wind, clouds, flocks of birds, fog for depth, sun, moon, stars, fireflies, light motes drifting past the camera, and your name standing in the valley as the hero title (`drawTitle` in the file). The camera glides forward over the forest as you scroll. Sky and light colours per time of day are in the `PAL` object; tree and ground colours are the `hexC('#…')` values.
 - `forestsound.js` — the forest's sound: wind, birdsong, crickets, the campfire, the forest song, and the keepers' voices.
+- `assets/voice/` — the keepers' recorded lines, made by `tools/make_voices.py`.
 - `story.js` — story mode: the opening narrated by the sage at the campfire, and the four guides who walk visitors to their part of the page. See below.
 - `landscape.js` — decides the time of day from the scroll position (the hour for each section is in `SECTION_HOURS`) and keeps text readable over the scene. It also draws a 2D version of the forest, which is shown only if a browser can't run the 3D one.
 - `island3d.js` — the floating 3D forest island in the Design section (Three.js, loaded only when needed).
@@ -74,7 +75,11 @@ follows the page, so the walk to Lumen happens at night.
     pitch and pace), and each line's mood (`warm`, `excited`, `sheepish`…, see `MOODS`) adjusts the delivery.
     Before some lines a keeper makes its own sound: a hum, a hoot, a yip, a soft call, a chime.
     On devices without speech, the keepers babble in their own pitch instead.
-  - How words are pronounced is fixed in `SAY`, for example how "Priyanshu" and the email address are read out.
+  - Recorded voices: `tools/make_voices.py` records every line with ElevenLabs into `assets/voice/`, and the story plays those
+    instead of the device's voices. After editing a line in `story.js`, run `python3 tools/make_voices.py` again: only new or changed
+    lines are recorded, and it asks for your API key without saving it. `CAST` at the top of that script chooses each keeper's voice.
+    A line with no recording falls back to the device's voice. The footer credits ElevenLabs once recordings exist.
+  - How device voices pronounce words is set in `SAY` in `forestsound.js`; for recordings, it's `SAY` in `tools/make_voices.py`.
 - Add `?story` to the address to see the intro again, or `?nostory` to skip it. Links to a section (`#work`) skip it too,
   and so does the reduced-motion setting.
 

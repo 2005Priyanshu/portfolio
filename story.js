@@ -10,7 +10,7 @@
    then hands over its scene and calls update() every frame (startStory).
    ===================================================================== */
 
-import { sound } from './forestsound.js?v=20261104b';
+import { sound } from './forestsound.js?v=20261104c';
 
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -768,6 +768,7 @@ export function startStory(api) {
   const chapter = s => { chapterEl.textContent = s; };
   const titleEl = $('.story__title'), sndEls = ui.querySelectorAll('.story__snd');
   let wantSound = true; // the title card's choice, before sound can start
+  let soundRefused = false; // the visitor turned it off, so opening the story later won't turn it back on
   const showSound = v => sndEls.forEach(b => { b.setAttribute('aria-pressed', String(v)); b.querySelector('span').textContent = v ? 'Sound on' : 'Sound off'; });
   const soundIsOn = () => !!(window.PS && PS.soundOn && PS.soundOn());
   function setSound(v) { // the page's Sound button is the one switch for everything
@@ -775,7 +776,7 @@ export function startStory(api) {
     if (v) sound.unlockSpeech();
     showSound(v);
   }
-  document.addEventListener('ps:sound', e => { sound.setOn(e.detail); showSound(e.detail); if (!e.detail) sound.hush(); });
+  document.addEventListener('ps:sound', e => { sound.setOn(e.detail); showSound(e.detail); soundRefused = !e.detail; if (!e.detail) sound.hush(); });
   sndEls.forEach(b => b.addEventListener('click', e => {
     e.stopPropagation();
     if (!titleEl.hidden) { wantSound = !wantSound; showSound(wantSound); } else setSound(!soundIsOn());
@@ -862,7 +863,7 @@ export function startStory(api) {
   box.addEventListener('click', () => { if (!choosing) advance(); });
   skipEl.addEventListener('click', () => skip());
   const closeGate = () => { titleEl.hidden = true; ui.classList.remove('gate'); const g = gateOpen; gateOpen = null; return g; };
-  $('.story__enter').addEventListener('click', e => { e.stopPropagation(); if (!gateOpen) return; setSound(wantSound); closeGate()(); });
+  $('.story__enter').addEventListener('click', e => { e.stopPropagation(); if (!gateOpen) return; soundRefused = !wantSound; setSound(wantSound); closeGate()(); });
   $('.story__out').addEventListener('click', e => { e.stopPropagation(); closeGate(); skip(); });
   addEventListener('keydown', e => {
     if (!active) return;
@@ -939,9 +940,9 @@ export function startStory(api) {
   }
   function open(k = -1) {
     if (active) return;
-    if (sound.on) sound.unlockSpeech();
     const id = cancel();
     enterFromPage();
+    if (!soundRefused) setSound(true); // opening the story is a click, so its sound can start here; it's half the story
     (k >= 0 ? tour(k, id, true) : backToCamp(id)).catch(swallow);
   }
 
@@ -1146,7 +1147,8 @@ export function startStory(api) {
       if (!booted) { booted = true; if (html.classList.contains('story-boot')) { const id = cancel(); intro(id, true).catch(swallow); } }
       for (let i = timers.length - 1; i >= 0; i--) { const w = timers[i]; if (w.id !== run) { timers.splice(i, 1); continue; } if ((w.left -= dt) <= 0) { timers.splice(i, 1); w.res(); } }
       if (line && line.wait > 0 && (line.wait -= dt) <= 0) startLine();
-      if (line && !(line.wait > 0) && line.n < line.text.length) {
+      if (line && !(line.wait > 0) && !(line.spk && line.spk.loading) && line.n < line.text.length) {
+        if (line.spk) line.cps = clamp(line.text.length / line.spk.secs, 16, 60); // a recording's length is known once it's loaded
         const k0 = Math.floor(line.n);
         line.n = Math.min(line.text.length, line.n + dt * (reduce ? 1e4 : line.cps));
         const k = Math.floor(line.n);

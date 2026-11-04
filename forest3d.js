@@ -12,7 +12,7 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
 // Story mode (story.js): the sage's opening and the guides. Loaded first, because its trail and
 // glades are carved into the land; the forest runs without it if it fails to load.
-const story = await import('./story.js?v=20261104b').catch(e => { console.warn('Story mode disabled:', e); return null; });
+const story = await import('./story.js?v=20261104c').catch(e => { console.warn('Story mode disabled:', e); return null; });
 
 const canvas = document.getElementById('world');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
