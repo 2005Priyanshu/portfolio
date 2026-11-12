@@ -10,8 +10,8 @@
   <meta name="theme-color" content="#222124" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261104c" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400&family=Instrument+Serif:ital@0;1&family=Anton&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20261110e" />
   <script>
     /* Story mode opens the first visit in the forest (story.js). Decided here, before anything is drawn,
        so the page doesn't flash up first. Add ?story to see it again, ?nostory to skip it. */
@@ -52,6 +52,8 @@
       <a href="#contact">Contact</a>
     </nav>
     <div class="header__meta glass glass--refract">
+      <!-- Radio mode: a louder, faster version of this portfolio in funky/ -->
+      <a id="radioMode" class="radio-mode" href="funky/" data-cursor="Radio" aria-label="Switch to radio mode"><svg class="radio-mode__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="7.5" width="19" height="12.5" rx="2.5"/><circle cx="8" cy="13.75" r="2.8"/><circle cx="16" cy="13.75" r="2.8"/><path d="M7 7.5 9 4h6l2 3.5"/></svg><span>Radio mode</span></a>
       <button id="paletteBtn" class="kbd" aria-label="Open the command menu" aria-haspopup="dialog" data-cursor="Menu"><span class="kbd__key kbd__mod">⌘</span><span class="kbd__key">K</span></button>
       <!-- Soundtrack: put an audio file you have the rights to at data-track and set its tempo in data-bpm.
            Without the file, the built-in generated track plays instead. -->
@@ -133,7 +135,7 @@
       <ol class="roles">
         <li class="role blur-in">
           <button class="role__row" aria-expanded="false" data-cursor="Open">
-            <span class="role__year mono">2026 – Now</span>
+            <span class="role__year mono">2026 to now</span>
             <span class="role__co">Scale AI</span>
             <span class="role__title">Gen AI Queue Manager</span>
             <span class="role__plus" aria-hidden="true"></span>
@@ -146,7 +148,7 @@
         </li>
         <li class="role blur-in">
           <button class="role__row" aria-expanded="false" data-cursor="Open">
-            <span class="role__year mono">2025 – 2026</span>
+            <span class="role__year mono">2025 to 2026</span>
             <span class="role__co">Outlier.ai</span>
             <span class="role__title">AI Expert</span>
             <span class="role__plus" aria-hidden="true"></span>
@@ -411,12 +413,13 @@
 
   <svg class="lg-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs></defs></svg>
 
-  <script src="case-studies.js?v=20261104c"></script>
+  <script src="case-studies.js?v=20261111a"></script>
   <script src="main.js?v=20261104c"></script>
-  <script src="features.js?v=20261104c"></script>
+  <script src="features.js?v=20261110b"></script>
   <script src="landscape.js?v=20261104c"></script>
   <script src="spline.js?v=20261104c"></script>
   <script type="module" src="forest3d.js?v=20261104c"></script>
   <script type="module" src="island3d.js?v=20261104c"></script>
+  <script src="funky/switch.js?v=20261110a"></script>
 </body>
 </html>

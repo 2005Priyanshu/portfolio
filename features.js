@@ -42,7 +42,9 @@
   if (grid) {
     grid.innerHTML = CASES.map((c, i) => `
       <a class="case-card blur-in" href="#case/${esc(c.slug)}" data-cursor="Read" style="--d:${i * .1}s">
-        <span class="case-card__media"><img src="${esc(c.cover)}" alt="${esc(c.title)}: ${esc(c.subtitle)}" loading="lazy" /></span>
+        <span class="case-card__media${c.gallery ? ' case-card__media--fan' : ''}">${c.gallery // a fanned spread of pieces, for work made of tall posters
+          ? `<span class="fan" role="img" aria-label="${esc(c.title)}: ${esc(c.subtitle)}">${c.gallery.map((src, k) => `<img src="${esc(src)}" alt="" loading="lazy" style="--k:${k - (c.gallery.length - 1) / 2}" />`).join('')}</span>`
+          : `<img src="${esc(c.cover)}" alt="${esc(c.title)}: ${esc(c.subtitle)}" loading="lazy" />`}</span>
         <span class="case-card__meta mono"><span>${String(i + 1).padStart(2, '0')} · ${esc(c.year)}</span><span>${esc(c.type)}</span></span>
         <span class="case-card__title">${esc(c.title)}</span>
         <span class="case-card__sub">${esc(c.subtitle)}</span>
@@ -66,8 +68,11 @@
 
   function renderCase(c, i) {
     const next = CASES[(i + 1) % CASES.length];
-    const block = s => s.image
-      ? `<figure class="case__fig reveal-up"><img src="${esc(s.image)}" alt="${esc(s.caption || c.title)}" loading="lazy" />${s.caption ? `<figcaption class="mono muted">${esc(s.caption)}</figcaption>` : ''}</figure>`
+    const cap = s => s.caption ? `<figcaption class="mono muted">${esc(s.caption)}</figcaption>` : '';
+    const block = s => s.images // several images side by side, for tall pieces like posters
+      ? `<figure class="case__fig reveal-up"><div class="case__row">${s.images.map(src => `<img src="${esc(src)}" alt="${esc(s.caption || c.title)}" loading="lazy" />`).join('')}</div>${cap(s)}</figure>`
+      : s.image
+      ? `<figure class="case__fig reveal-up"><img src="${esc(s.image)}" alt="${esc(s.caption || c.title)}" loading="lazy" />${cap(s)}</figure>`
       : `<section class="case__block reveal-up"><h2 class="case__h">${esc(s.heading)}</h2><div class="case__body">${(s.text || []).map(p => `<p>${esc(p)}</p>`).join('')}${s.list ? `<ul>${s.list.map(li => `<li>${esc(li)}</li>`).join('')}</ul>` : ''}</div></section>`;
     article.innerHTML = `
       <header class="case__hero">

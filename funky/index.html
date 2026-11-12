@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Priyanshu Singh | Radio Mode</title>
+  <meta name="description" content="Priyanshu Singh, data scientist and product designer, on the radio: a pirate station at the edge of a dark universe, with his work, his designs and something listening." />
+  <meta name="theme-color" content="#05030b" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="funky.css?v=20261112d" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23ffe600'/><circle cx='11' cy='18' r='5' fill='%230b0b0f'/><circle cx='21' cy='18' r='5' fill='%230b0b0f'/></svg>" />
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
+  </script>
+  <script>
+    // arriving through the switch on the forest page: start on black, where its transition ended
+    if (/[?&]via=switch\b/.test(location.search)) document.documentElement.classList.add('via-switch');
+    // the theme is chosen before anything is drawn: dark unless the visitor picked light
+    try { document.documentElement.dataset.theme = localStorage.getItem('radio-theme') === 'light' ? 'light' : 'dark'; } catch (e) { document.documentElement.dataset.theme = 'dark'; }
+  </script>
+</head>
+<body class="boot" data-beat="0" data-state="idle">
+
+  <!-- the universe: drawn in 3D by world3d.js; .bg shows only where that cannot run -->
+  <div class="bg" aria-hidden="true"></div>
+  <canvas id="world" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- top bar -->
+  <header class="top">
+    <a class="top__brand" href="#z0" data-jump="0" aria-label="Back to the start"><b>PS</b><span>Priyanshu<br />Singh</span></a>
+
+    <!-- the player: what is on air, with the controls -->
+    <div class="player glass" id="player">
+      <span class="vinyl" aria-hidden="true"></span>
+      <button class="player__meta" type="button" data-jump="6" title="Open the collection">
+        <span class="player__title">Infinite Power!</span>
+        <span class="player__sub">TheFatRat · press play</span>
+      </button>
+      <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <div class="player__ctl">
+        <button class="pbtn" type="button" data-act="prev" aria-label="Previous song"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14M20 5 9 12l11 7z" /></svg></button>
+        <button class="pbtn pbtn--play" type="button" data-act="toggle" aria-label="Play"><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" /></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h4v16H7zM14 4h4v16h-4z" /></svg></button>
+        <button class="pbtn" type="button" data-act="next" aria-label="Next song"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14M4 5l11 7-11 7z" /></svg></button>
+      </div>
+      <span class="player__bar" aria-hidden="true"><i></i></span>
+    </div>
+
+    <div class="top__actions">
+      <button class="pill" id="themeBtn" type="button"><span class="pill__icon" aria-hidden="true">☀</span><span class="pill__label">Lights on</span></button>
+      <a class="pill" href="../?nostory" data-exit><span aria-hidden="true">🌲</span><span class="pill__label">Forest mode</span></a>
+    </div>
+  </header>
+
+  <!-- intro shout and the first play button -->
+  <div class="shout" aria-hidden="true"><span></span></div>
+  <button class="play" type="button"><span class="play__icon" aria-hidden="true">▶</span><span>Press play</span><small>silence wakes The Static</small></button>
+
+  <main class="street">
+
+    <!-- 0 · hello -->
+    <section class="zone" id="z0" data-zone="0" aria-label="Hello">
+      <div class="col">
+        <p class="chip chip--live"><i aria-hidden="true"></i>On air from Delhi, heard across the universe</p>
+        <h1 class="mega" aria-label="Priyanshu Singh"><span class="mega__row" data-letters>PRIYANSHU</span><span class="mega__row mega__row--2" data-letters>SINGH</span></h1>
+        <p class="lede glass">I train and evaluate <em>language models</em>, and design the products people use them through.</p>
+        <div class="chips"><span class="chip">Data scientist</span><span class="chip">Product designer</span><span class="chip">LLM trainer at Scale AI</span></div>
+        <p class="lore glass"><b>Dead air warning.</b> Out past the last station, something feeds on silence. They call it The Static. Keep the music playing.</p>
+        <p class="hint">Scroll to travel the signal <span aria-hidden="true">↓</span></p>
+      </div>
+    </section>
+
+    <!-- 1 · about -->
+    <section class="zone" id="z1" data-zone="1" aria-label="About">
+      <div class="col">
+        <h2 class="headline"><span>Who's on</span><span>the mic?</span></h2>
+        <article class="glass card">
+          <p class="kicker">About</p>
+          <p>Most AI is judged by what it says. For the past year I've worked on the other side of that: writing, ranking and stress testing model responses for Scale AI and Outlier, on projects for Google and Apple.</p>
+          <p>Alongside it, I design. Figma, product flows, landing pages and frontends, because a model is only as good as the interface it reaches people through.</p>
+        </article>
+        <div class="stats">
+          <div class="glass stat"><b>20+</b><span>LLM projects shipped</span></div>
+          <div class="glass stat"><b>&lt;5%</b><span>QA failure rate at Scale AI</span></div>
+          <div class="glass stat"><b>4,000+</b><span>people reached through events</span></div>
+          <div class="glass stat"><b>8.0</b><span>CGPA, B.Tech CSE</span></div>
+        </div>
+        <article class="glass card card--slim">
+          <p class="kicker">Education</p>
+          <h3>B.Tech, Computer Science Engineering</h3>
+          <p>Data Science specialisation at Bennett University, The Times Group. 2023 to 2027, CGPA 8.0.</p>
+          <p class="mono">OS · DSA · Algorithms · AI · ML · Networks · Databases</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 2 · experience: the section stays put while the tapes slide past -->
+    <section class="zone zone--pin" id="z2" data-zone="2" aria-label="Experience">
+      <div class="pin">
+        <header class="pin__head">
+          <h2 class="headline headline--sm"><span>The</span><span>mixtapes</span></h2>
+          <p class="glass pin__intro">My experience, tape by tape: running Gen AI queues at Scale AI, training and evaluating language models on Google and Apple projects at Outlier, building software for Indian Railways, and two marketing internships along the way.</p>
+        </header>
+        <div class="tapes" id="tapes">
+          <article class="glass tape" style="--tint:#ff2e88">
+            <p class="tape__side">Side A · 2026 to now</p>
+            <h3>Scale AI</h3>
+            <p class="tape__role">Gen AI Queue Manager · Contract, remote</p>
+            <p>I support RLHF, SFT and SWE coding workflows, delivering annotations and prompt engineering outputs with a QA failure rate under 5%.</p>
+            <p>I also manage task pipelines and taxonomy design, and contribute to quality control processes that scale across global assignments.</p>
+            <ul class="tags"><li>RLHF</li><li>SFT</li><li>Prompt engineering</li><li>Quality control</li></ul>
+          </article>
+          <article class="glass tape" style="--tint:#ffe600">
+            <p class="tape__side">Side B · 2025 to 2026</p>
+            <h3>Outlier.ai</h3>
+            <p class="tape__role">AI Expert · Contract, remote</p>
+            <p>I worked on 20+ projects in the India INQA managed workforce, training, pruning and evaluating LLMs through prompt engineering, data labelling and quality assessment.</p>
+            <p><b>Project Gemini, Google.</b> Veo 3 and Google Slides optimisation tasks under ICE team guidance.</p>
+            <p><b>Project Penguin, Apple.</b> Tuning agentic AI behaviour with n8n workflows, stress testing, RL and prompt tuning.</p>
+            <ul class="tags"><li>LLM evaluation</li><li>Agentic AI</li><li>n8n</li></ul>
+          </article>
+          <article class="glass tape" style="--tint:#00e5ff">
+            <p class="tape__side">Bonus track · 2025</p>
+            <h3>Banaras Locomotive Works</h3>
+            <p class="tape__role">Student Developer · Internship, on site in Varanasi</p>
+            <p>I built and maintained DBMS and internal systems for Indian Railways using Java, .NET and SQL.</p>
+            <p>I also ran mechanical and electrical tests on locomotives, including load tests and road run tests, and supported production scheduling and quality control.</p>
+            <ul class="tags"><li>Java</li><li>.NET</li><li>SQL</li></ul>
+          </article>
+          <article class="glass tape" style="--tint:#b6ff00">
+            <p class="tape__side">Remix · 2025</p>
+            <h3>Calivo AI</h3>
+            <p class="tape__role">Marketing Intern · Internship, remote</p>
+            <p>I executed AI focused campaigns for user acquisition and brand visibility, analysed market and user data to refine targeting and positioning, and optimised for conversion.</p>
+            <ul class="tags"><li>Campaigns</li><li>Market analysis</li><li>Conversion</li></ul>
+          </article>
+          <article class="glass tape" style="--tint:#ff6b00">
+            <p class="tape__side">Remix · 2025</p>
+            <h3>Coginetics LLP</h3>
+            <p class="tape__role">Marketing Intern · Internship, hybrid</p>
+            <p>I ran digital campaigns to grow reach and engagement, researched markets and competitors, and tracked KPIs with cross functional teams.</p>
+            <ul class="tags"><li>Digital campaigns</li><li>Research</li><li>KPIs</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · the design district: the camera visits the work as real objects, one exhibit at a time -->
+    <section class="zone zone--pin" id="z3" data-zone="3" aria-label="Design district">
+      <div class="pin">
+        <header class="pin__head">
+          <h2 class="headline headline--sm"><span>The design</span><span>district</span></h2>
+          <p class="hint hint--tap">Drag to turn things. Click to open them.</p>
+        </header>
+        <article class="glass card caption" id="caption" aria-live="polite"></article>
+      </div>
+    </section>
+
+    <!-- 4 · projects: the section stays put while the camera visits a 3D mockup of each -->
+    <section class="zone zone--pin" id="z4" data-zone="4" aria-label="Projects">
+      <div class="pin">
+        <header class="pin__head">
+          <h2 class="headline headline--sm"><span>Greatest</span><span>hits</span></h2>
+          <p class="hint hint--tap">Drag to turn each one</p>
+        </header>
+        <div class="tapes" id="hits">
+          <a class="glass tape hit" style="--tint:#3dd6ff" href="https://github.com/2005Priyanshu" target="_blank" rel="noopener">
+            <p class="tape__side">Track 01 · 2025</p>
+            <h3>Rainfall Prediction System</h3>
+            <p>Rainfall forecasts from Random Forest and XGBoost models, served through a FastAPI backend.</p>
+            <ul class="tags"><li>Random Forest</li><li>XGBoost</li><li>FastAPI</li></ul>
+            <span class="hit__go">View on GitHub ↗</span>
+          </a>
+          <a class="glass tape hit" style="--tint:#ffd60a" href="https://github.com/2005Priyanshu" target="_blank" rel="noopener">
+            <p class="tape__side">Track 02 · 2025</p>
+            <h3>Time Series Forecasting</h3>
+            <p>Forecasting with ARIMA and VAR models, with diagnostics to check how well each one fits.</p>
+            <ul class="tags"><li>ARIMA</li><li>VAR</li><li>Diagnostics</li></ul>
+            <span class="hit__go">View on GitHub ↗</span>
+          </a>
+          <a class="glass tape hit" style="--tint:#19d68a" href="https://github.com/2005Priyanshu" target="_blank" rel="noopener">
+            <p class="tape__side">Track 03 · 2024</p>
+            <h3>Stock Market Prediction</h3>
+            <p>Predicting stock movement with machine learning in Python, with the results visualised.</p>
+            <ul class="tags"><li>Python</li><li>ML</li><li>Visualisation</li></ul>
+            <span class="hit__go">View on GitHub ↗</span>
+          </a>
+          <a class="glass tape hit" style="--tint:#b06bff" href="https://github.com/2005Priyanshu" target="_blank" rel="noopener">
+            <p class="tape__side">Track 04 · 2024</p>
+            <h3>Code Breakers</h3>
+            <p>A gaming hub built in Python.</p>
+            <ul class="tags"><li>Python</li><li>Gaming hub</li></ul>
+            <span class="hit__go">View on GitHub ↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · skills -->
+    <section class="zone zone--right" id="z5" data-zone="5" aria-label="Skills">
+      <div class="col">
+        <h2 class="headline"><span>The mixing</span><span>desk</span></h2>
+        <div class="desk">
+          <article class="glass skill" style="--tint:#b6ff00"><div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><h3>LLMs and agentic AI</h3><p>RLHF and SFT · Model evaluation · Prompt engineering · Autogen · n8n · MCP · Multi model and conversational AI</p></article>
+          <article class="glass skill" style="--tint:#ff8a00"><div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><h3>Data and ML</h3><p>Python · Pandas · Scikit-learn · TensorFlow · XGBoost · OpenCV · Plotly · Bokeh · Matplotlib · Scanpy · DESeq2</p></article>
+          <article class="glass skill" style="--tint:#00e5ff"><div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><h3>Design and frontend</h3><p>Figma · Product design · UI/UX · Prototyping · Design systems · React · JavaScript · HTML and CSS</p></article>
+          <article class="glass skill" style="--tint:#ff4f9a"><div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><h3>Engineering</h3><p>C++ · Java · SQL · Node.js · Express · Django · FastAPI · Docker · Kubernetes · CI/CD · GitHub Actions</p></article>
+        </div>
+        <div class="extras">
+          <article class="glass card card--slim"><p class="kicker">Recognition</p><ul class="plain"><li><b>2nd Runners-up</b> Sandbox24, JIIT</li><li><b>Winner</b> Mobilon's RT Conference '23</li><li><b>Finalist</b> Smart BU Hackathon</li></ul></article>
+          <article class="glass card card--slim"><p class="kicker">Leadership</p><ul class="plain"><li><b>Multimedia Lead, GDG Bennett</b> 12+ events, 40% member growth</li><li><b>Founding Core Member, CLTI</b> Logistics and technology</li><li><b>Lead, Student Times Media</b> Workshops for 7,000+ scholars</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · the music collection -->
+    <section class="zone" id="z6" data-zone="6" aria-label="Music collection">
+      <div class="col col--wide">
+        <h2 class="headline"><span>On</span><span>rotation</span></h2>
+        <article class="glass card card--slim">
+          <p class="kicker">The TheFatRat collection</p>
+          <p>Ten songs in one continuous mix. Nothing changes as you scroll: each song plays through, then hands over to the next. Pick any card to jump to it.</p>
+        </article>
+        <div class="crate" id="crate"></div>
+        <p class="credit">All songs by <a href="https://www.youtube.com/@TheFatRat" target="_blank" rel="noopener">TheFatRat</a>, streamed from his YouTube channel.</p>
+      </div>
+    </section>
+
+    <!-- 7 · contact -->
+    <section class="zone" id="z7" data-zone="7" aria-label="Contact">
+      <div class="col">
+        <article class="glass card card--contact">
+          <p class="kicker">Request a song</p>
+          <h2 class="contact__big">Let's make some noise.</h2>
+          <p>Based in Delhi, India, and open to new opportunities.</p>
+          <a class="contact__mail" href="mailto:2005priyanshu@gmail.com">2005priyanshu@gmail.com</a>
+          <div class="contact__links">
+            <a class="pill" href="https://github.com/2005Priyanshu" target="_blank" rel="noopener">GitHub ↗</a>
+            <a class="pill" href="../?nostory" data-exit>🌲 Back to the forest</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- stops along the street -->
+  <nav class="rail" aria-label="Stops">
+    <button type="button" data-jump="0"><span>Hello</span></button>
+    <button type="button" data-jump="1"><span>About</span></button>
+    <button type="button" data-jump="2"><span>Experience</span></button>
+    <button type="button" data-jump="3"><span>Design</span></button>
+    <button type="button" data-jump="4"><span>Projects</span></button>
+    <button type="button" data-jump="5"><span>Skills</span></button>
+    <button type="button" data-jump="6"><span>Music</span></button>
+    <button type="button" data-jump="7"><span>Contact</span></button>
+  </nav>
+
+  <!-- where you are, and how close The Static is -->
+  <div class="hud glass" aria-live="polite"><span><b>Stop</b> <span class="hud__stop">01 / 08</span></span><span class="hud__static">The Static: keeping its distance</span><button class="hud__auto" type="button" aria-pressed="false">Autopilot</button></div>
+
+  <!-- the songs play from here, out of sight (see TRACKS in funky.js) -->
+  <div class="tv" aria-hidden="true" inert><div id="tvPlayer"></div></div>
+
+  <!-- case study viewer -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal__scrim" data-close></div>
+    <article class="modal__box glass">
+      <button class="modal__close" type="button" data-close aria-label="Close">✕</button>
+      <div class="modal__body"></div>
+    </article>
+  </div>
+
+  <div class="whisper" aria-hidden="true"><b>It hears you.</b><span>Press play.</span></div>
+  <div class="cut" aria-hidden="true"><b></b></div>
+  <div class="flash" aria-hidden="true"></div>
+  <div class="exit" aria-hidden="true"><i></i><i></i><i></i><i></i><b>Back to the forest</b></div>
+
+  <script src="../case-studies.js?v=20261112d"></script>
+  <script type="module" src="funky.js?v=20261112d"></script>
+</body>
+</html>

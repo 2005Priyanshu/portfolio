@@ -1,5 +1,5 @@
 /* =====================================================================
-   PRIYANSHU SINGH — PORTFOLIO
+   PRIYANSHU SINGH: PORTFOLIO
    1. Section tracking (the scenery is the 3D forest in forest3d.js)
    2. Text reveals · counters · header state · clock
    3. Custom cursor · experience accordion · project hover previews
@@ -512,7 +512,7 @@
        arrangement of those layers, so the song evolves as you scroll. */
     const BPM = 86, STEP = 60 / BPM / 4, SWING = .17;
     const hz = n => 440 * Math.pow(2, (n - 69) / 12);
-    // Fmaj9 → Em7 → Dm9 → Cmaj9 (IV–iii–ii–I in C)
+    // Fmaj9 → Em7 → Dm9 → Cmaj9 (IV, iii, ii, I in C)
     const CHORDS = [[53, 57, 60, 64, 67], [52, 55, 59, 62], [50, 53, 57, 60, 64], [48, 52, 55, 59, 62]];
     const ROOTS = [41, 40, 38, 36];
     const BASS = [[0, 0, 6], [7, 0, 1], [8, 7, 4], [14, 12, 2]]; // [step, interval, length]
